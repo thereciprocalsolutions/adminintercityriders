@@ -1,0 +1,190 @@
+<html>
+<head>
+ <title>Intercity Riders - Admin Page</title>
+ <script src="https://www.gstatic.com/firebasejs/4.9.0/firebase.js"></script>
+ <script>
+  // Your web app's Firebase configuration
+  
+var firebaseConfig = {
+   
+ apiKey: "AIzaSyDUV-KSDEb3gufrMQbWIDUk44n1J8eMawY",
+    
+authDomain: "intercityrider.firebaseapp.com",
+    
+databaseURL: "https://intercityrider.firebaseio.com",
+    
+projectId: "intercityrider",
+    
+storageBucket: "intercityrider.appspot.com",
+    
+messagingSenderId: "205048091037",
+    
+appId: "1:205048091037:web:4039e159b8701819a71f74",
+    
+measurementId: "G-7ZLG79C6HZ"
+  
+};
+
+  // Initialize Firebase
+  
+firebase.initializeApp(firebaseConfig);
+ 
+const analytics = firebase.analytics();
+ firebase.analytics();  
+</script>
+<style>
+@import 'https://fonts.googleapis.com/css?family=Open+Sans:600,700';
+
+* {font-family: 'Open Sans', sans-serif;}
+
+.rwd-table {
+  margin: auto;
+  min-width: 300px;
+  max-width: 100%;
+  border-collapse: collapse;
+}
+
+.rwd-table tr:first-child {
+  border-top: none;
+  background: #428bca;
+  color: #fff;
+}
+
+.rwd-table tr {
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  background-color: #f5f9fc;
+}
+
+.rwd-table tr:nth-child(odd):not(:first-child) {
+  background-color: #ebf3f9;
+}
+
+.rwd-table th {
+  display: none;
+}
+
+.rwd-table td {
+  display: block;
+}
+
+.rwd-table td:first-child {
+  margin-top: .5em;
+}
+
+.rwd-table td:last-child {
+  margin-bottom: .5em;
+}
+
+.rwd-table td:before {
+  content: attr(data-th) ": ";
+  font-weight: bold;
+  width: 120px;
+  display: inline-block;
+  color: #000;
+}
+
+.rwd-table th,
+.rwd-table td {
+  text-align: left;
+}
+
+.rwd-table {
+  color: #333;
+  border-radius: .4em;
+  overflow: hidden;
+}
+
+.rwd-table tr {
+  border-color: #bfbfbf;
+}
+
+.rwd-table th,
+.rwd-table td {
+  padding: .5em 1em;
+}
+@media screen and (max-width: 601px) {
+  .rwd-table tr:nth-child(2) {
+    border-top: none;
+  }
+}
+@media screen and (min-width: 600px) {
+  .rwd-table tr:hover:not(:first-child) {
+    background-color: #d8e7f3;
+  }
+  .rwd-table td:before {
+    display: none;
+  }
+  .rwd-table th,
+  .rwd-table td {
+    display: table-cell;
+    padding: .25em .5em;
+  }
+  .rwd-table th:first-child,
+  .rwd-table td:first-child {
+    padding-left: 0;
+  }
+  .rwd-table th:last-child,
+  .rwd-table td:last-child {
+    padding-right: 0;
+  }
+  .rwd-table th,
+  .rwd-table td {
+    padding: 1em !important;
+  }
+}
+ </style>
+</head>
+<body>
+
+<div class="container">
+  <table class="rwd-table" id="tbl_users_list">
+    <tbody>
+      <tr>
+        <!--th>#ID</th-->
+   <th>Customer Name</th>
+   <th>Phone Number</th>
+   <th>Pickup Location</th>
+   <th>Drop Loction</th>
+   <th>Car type</th>
+   <th>Pickup Date</th>
+      </tr>
+      
+    </tbody>
+  </table>
+<center>
+  <h3>Checking..</h3>
+</div>
+ 
+ <script>
+ 
+  var tblUsers = document.getElementById('tbl_users_list');
+  var databaseRef = firebase.database().ref('book/');
+  var rowIndex = 1;
+  
+  databaseRef.once('value', function(snapshot) {
+    snapshot.forEach(function(childSnapshot) {
+   var childKey = childSnapshot.key;
+   var childData = childSnapshot.val();
+   
+   var row = tblUsers.insertRow(rowIndex);
+  // var cellId = row.insertCell(0);
+   var cellName = row.insertCell(0);
+   var cellC = row.insertCell(1);
+   var cellP = row.insertCell(2);   
+   var cellE = row.insertCell(3);
+   var cellQ = row.insertCell(4);
+   var cellM = row.insertCell(5);
+  // cellId.appendChild(document.createTextNode(childKey));
+   cellName.appendChild(document.createTextNode(childData.name));
+   cellC.appendChild(document.createTextNode(childData.phone));
+   cellP.appendChild(document.createTextNode(childData.pickuplocation));
+   cellE.appendChild(document.createTextNode(childData.droplocation));
+   cellQ.appendChild(document.createTextNode(childData.cars));
+   cellM.appendChild(document.createTextNode(childData.pickuptime));
+   rowIndex = rowIndex + 1;
+    });
+  }); 
+ </script>
+</body>
+</html>
